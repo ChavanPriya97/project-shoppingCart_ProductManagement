@@ -104,7 +104,7 @@ const loginUser = async function (req, res) {
     const data = req.body;
     const { email, password } = data;
 
-    if (Object.keys(data).length == 0) return res.status(404).send({status: false,Msg: "Please provide data in the request body!",});
+    if (Object.keys(data).length == 0) return res.status(400).send({status: false,Msg: "Please provide data in the request body!",});
 
     if (!email) return res.status(400).send({ status: false, message: "Email is required!" });
     if (!isValidEmail(email)) return res.status(400).send({ status: false, message: "Email is invalid!" });
@@ -131,7 +131,7 @@ const loginUser = async function (req, res) {
 
         res.setHeader("x-api-key", token);
 
-        return res.status(201).send({status: true,message: "User login successfull",data: { userId: checkEmail._id, token: token },});
+        return res.status(200).send({status: true,message: "User login successfull",data: { userId: checkEmail._id, token: token },});
       } else {
         return res.status(401).send({ status: false, message: "Incorrect password or email" });
       }
@@ -204,7 +204,7 @@ const UpdateUser = async(req,res)=>{
 
       const { shipping, billing } = address;
 
-      if (shipping  && !billing) {
+      if (shipping ) {
         if(typeof(shipping) !== "Object"){
           const { street, city, pincode } = shipping;
           if(street){

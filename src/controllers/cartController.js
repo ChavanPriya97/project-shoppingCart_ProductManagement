@@ -63,7 +63,7 @@ const createCart = async function(req,res){
           if(!(cartFind._id == cartId)) return res.status(400).send({status : false , message : "cartID not match"})
 
           let cartItems = cartFind.items
-          for(let i =0;i<cartItems .length;i++){  // we are checking that the product that we are sending from request body is exist in our items of cart model 
+          for(let i =0;i<cartItems.length;i++){  // we are checking that the product that we are sending from request body is exist in our items of cart model 
               if( productId == cartItems[i].productId){ // the client is suggesting us for decrementation of one quantity of the product from the cart
 
                 cartItems[i].quantity = (cartItems [i].quantity)+quantity
@@ -234,7 +234,7 @@ const getCart = async function (req, res) {
       const cartFind = await cartModel.findOne({ userId: userId })
 
       if (!cartFind) 
-        return rse.status(400).send({ status: false, message: "cart does not exist" })
+        return res.status(400).send({ status: false, message: "cart does not exist" })
       
       return res.status(200).send({ status: true, message: "Success", data: cartFind })
 
@@ -258,14 +258,14 @@ const deleteCart = async function (req, res) {
     let userExist = await userModel.findOne({ _id: userId })
 
     if (!userExist)
-       return res.status(400).send({ status: false, message: " userId is not exit " })
+       return res.status(404).send({ status: false, message: " userId is not exit " })
 
     // checking cart exist or not
     let cartExist = await cartModel.findOne({ userId: userId })
                                     .select({items:1,totalItems:1,totalPrice:1,})
     
     if (!cartExist) 
-      return res.status(400).send({ status: false, message: " cart is not exit " })
+      return res.status(404).send({ status: false, message: " cart is not exit " })
 
     //delete cart of the user
     let deletedCart = await cartModel.findOneAndUpdate(
