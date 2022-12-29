@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(multer().any())
 
 mongoose.set('strictQuery', true)
-mongoose.connect("mongodb+srv://ashi:jhansi284205@myfirstcluster.tfihevu.mongodb.net/project5",
+mongoose.connect("mongodb+srv://PriyankaChavan:priyanka@cluster0.iocf9uz.mongodb.net/shoppingCart",
 {useNewUrlParser:true})
 
 .then(()=>console.log("mongodb connected"))
